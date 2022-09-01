@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="conteudo-principal">
+
+    <h2>Editar Professor</h2>
+    
+    <div class="conteudo-formulario">
+        <form method="post">
+
+            <div class="campos-formulario">
+                <label for="nome_professor">Nome:</label>
+                <input name="nome_professor" id="nome_professor" type="text" value="{{ professor[1] }}" required/>
+            </div>
+            <div class="campos-formulario">
+                <label for="txt_cpf">CPF:</label>
+                <input name="txt_cpf" id="txt_cpf" type="text" value="{{ professor[2] }}" required/>
+            </div>
+            <div class="checkbox">
+                <label for="ativo_professor">Ativo:</label>
+                {% if professor[3] == 1 %}
+                <input name="txt_ativo" id="txt_ativo" type="checkbox" checked >
+                {% else %}
+                <input name="txt_ativo" id="txt_ativo" type="checkbox" >
+                {% endif %}
+            </div>
+            <div class="campos-formulario">
+                <label for="txt_telefone">Telefone:</label>
+                <input name="txt_telefone" id="txt_telefone" type="text" value="{{ professor[4] }}" />
+            </div>    
+            <div class="campos-formulario">
+                <label for="txt_email">Email:</label>
+                <input name="txt_email" id="txt_email" type="email" value="{{ professor[5] }}" required/>
+            </div>
+            <div class="campos-formulario">
+                <label for="txt_formacao">Formação:</label>
+                <input name="txt_formacao" id="txt_formacao" type="text" value="{{ professor[6] }}" />
+            </div>   
+            <div class="campos-formulario">
+                <label for="txt_especialidade">Especialidade:</label>
+                <input name="txt_especialidade" id="txt_especialidade" type="text" value="{{ professor[7] }}" />
+            </div>   
+                
+            <button type="submit">Salvar</button>
+            
+        </form>
+
+        <a href="/listar/professores" class="botao-primario">Voltar</a>
+    </div>
+
+</div>
+{% endblock %}

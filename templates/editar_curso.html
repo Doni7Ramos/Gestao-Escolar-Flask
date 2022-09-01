@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="conteudo-principal">
+
+    <h2>Editar Curso</h2>
+    
+    <div class="conteudo-formulario">
+        <form method="post">
+
+            <div class="campos-formulario">
+                <label for="nome_curso">Nome:</label>
+                <input name="nome_curso" id="nome_curso" type="text" value="{{ curso[1] }}" required/>
+            </div>
+            <div class="campos-formulario">
+                <label for="txt_classificacao">Classificação:</label>
+                <input name="txt_classificacao" id="txt_classificacao" type="text" value="{{ curso[2] }}" required/>
+            </div>
+            <div class="checkbox">
+                <label for="ativo_curso">Ativo:</label>
+                {% if curso[3] == 1 %}
+                <input name="txt_ativo" id="txt_ativo" type="checkbox" checked >
+                {% else %}
+                <input name="txt_ativo" id="txt_ativo" type="checkbox" >
+                {% endif %}
+            </div>
+            <div class="campos-formulario">
+                <label for="txt_descricao">Descrição:</label>
+                <input name="txt_descricao" id="txt_descricao" type="text" value="{{ curso[4] }}" required/>
+            </div>    
+                            
+            <button type="submit">Salvar</button>
+            
+        </form>
+
+        <a href="/listar/cursos" class="botao-primario">Voltar</a>
+    </div>
+
+</div>
+{% endblock %}
