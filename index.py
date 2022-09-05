@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from aluno import Aluno
 from professor import Professor
 from curso import Curso
+from turma import Turma
 
 app = Flask (__name__)
 
@@ -174,3 +175,57 @@ def editar_curso(codigo):
     
 
     return render_template("editar_curso.html", curso=curso)
+
+# Rotas para Turmas
+
+@app.route ("/listar/turmas")
+def listar_turmas():
+
+    turmas = Turma.listar()
+
+    return render_template ("listar_turmas.html", turmas=turmas)
+
+@app.route ("/listar/turmas_alunos/<codigo_turma>")
+def listar_turmas_alunos (codigo_turma):
+
+    alunos = Turma.listar_alunos(codigo_turma)
+
+    return render_template ("listar_turmas_alunos.html", alunos = alunos, codigo_turma=codigo_turma)
+
+@app.route("/cadastro/turmas", methods=('GET', 'POST'))
+def cadastro_turma():
+
+    professores = Professor.listar()
+
+    cursos = Curso.listar()
+
+    alunos = Aluno.listar()
+
+    # Cadastro Turma
+    if request.method == 'POST':
+
+        data_inicio = request.form['data_inicio']
+
+        data_fim = request.form['data_fim']
+
+        periodo = request.form['periodo']
+
+        codigo_curso = request.form['cursos']
+
+        matricula_professor = request.form['professor']
+
+        alunos_selecionados = request.form.getlist('alunos')
+
+        if len(alunos_selecionados) >= 3:
+
+            Turma( data_inicio=data_inicio, data_fim=data_fim, periodo=periodo, codigo_curso=codigo_curso, matricula_professor=matricula_professor, alunos=alunos_selecionados)
+
+            return redirect (url_for('listar_turmas') )
+
+        else:
+            mensagem = "Selecione pelo menos 3 alunos"
+            return render_template("cadastro_turmas.html", professores=professores, cursos=cursos, alunos=alunos, mensagem=mensagem)
+
+
+    return render_template("cadastro_turmas.html", professores=professores, cursos=cursos, alunos=alunos, mensagem=None)
+

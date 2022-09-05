@@ -1,0 +1,84 @@
+{% extends "base.html" %} 
+
+{% block conteudo %}
+
+{% if mensagem != None %}
+    <div class="erro">
+        <h5>{{ mensagem }}</h5>
+    </div>
+{% endif %}
+
+<div class="conteudo-principal">
+    <h2>Cadastrar Turmas</h2>
+
+
+    <div class="conteudo-formulario">
+        <form method="post">
+            
+            <div class="campos-formulario">
+                <label for="data_inicio">Data Inicio</label>
+                <input type="date" name="data_inicio" id="data_inicio" required />
+            </div>
+                      
+            <div class="campos-formulario">
+                <label for="data_fim">Data Fim</label>
+                <input type="date" name="data_fim" id="data_fim" required />
+            </div>
+          
+            <div class="campos-formulario">
+                <label for="periodo">Periodo</label>
+                <select name="periodo" id="periodo" required>                
+             
+                    <option value="" selected disabled>Escolha um Periodo</option>
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noite">Noite</option>
+                </select>
+            </div>
+            
+            <div class="campos-formulario">
+                <label for="professor">Professor</label>
+                <select name="professor" id="professor" required>
+           
+                    <option value="" selected disabled>Escolha um Professor</option>
+                    {% for professor in professores %}
+                    <option value="{{professor[0]}}">{{professor[1]}}</option>
+                    {% endfor%}
+                </select>
+            </div>
+            
+            <div class="campos-formulario">
+                <label for="cursos">Cursos</label>
+                <select name="cursos" id="cursos" required>
+                    
+                    <option value="" selected disabled>Escolha um Curso</option>
+                    {% for curso in cursos %}
+                    <option value="{{curso[0]}}">{{curso[1]}}</option>
+                    {% endfor%}
+                </select>
+            </div>
+            
+        <hr />
+        
+        <h3><img src="{{url_for('static', filename='Atencao.png')}}" alt="Atencao">Alunos (Escolha pelo menos 3)</h3>
+        {% for aluno in alunos %}
+            
+            <div class="conteudo-alunos">
+                <input
+                    type="checkbox"
+                    name="alunos"
+                    id="{{aluno[0]}}"
+                    value="{{aluno[0]}}"
+                />
+                <label for="{{aluno[0]}}">{{aluno[0]}} - {{aluno[1]}}</label>
+                
+            </div>
+        {% endfor%}
+            
+            <button type="submit">Cadastrar</button>
+            
+            <h4><a href="/listar/turmas" class="botao-primario">Voltar</a></h4>
+        </form>
+    </div>
+</div>
+    {% endblock %}

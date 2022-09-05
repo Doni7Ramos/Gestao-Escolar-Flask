@@ -1,9 +1,9 @@
-from sqlite3 import *
+import sqlite3
 
 
 class Turma:
 
-    def __init__(self, periodo, data_inicio, data_fim, codigo_curso, matricula_professor):
+    def __init__(self, periodo, data_inicio, data_fim, codigo_curso, matricula_professor, alunos):
 
         self.__codigo = 0
 
@@ -17,6 +17,8 @@ class Turma:
 
         self.matricula_professor = matricula_professor
 
+        self.alunos = alunos
+
         self.salvar()
 
     @property
@@ -26,9 +28,9 @@ class Turma:
 
     def salvar(self):
 
-        self.verificaPeriodo()
+        #self.verificaPeriodo()
 
-        conexao = connect("gestao_escolar.db")
+        conexao = sqlite3.connect("gestao_escolar.db")
 
         cursor = conexao.cursor()
 
@@ -56,11 +58,30 @@ class Turma:
 
         conexao.commit()
 
+        for aluno in self.alunos:
+
+            sql_2 = f"""
+                INSERT INTO
+                Turmas_alunos (
+                    codigo_turma,
+                    matricula_aluno
+                )
+                VALUES (
+                    '{self.__codigo}',
+                    '{aluno}'
+                )
+            """
+
+            cursor.execute(sql_2)
+
+            conexao.commit()
+
+
         conexao.close()
 
     def verificaPeriodo(self):
 
-        conexao = connect("gestao_escolar.db")
+        conexao = sqlite3.connect("gestao_escolar.db")
 
         cursor = conexao.cursor()
         # Verificando o intervalo entre as datas
@@ -91,6 +112,51 @@ class Turma:
     def __repr__(self):
 
         return f"Código: {self.codigo}, Periodo: {self.periodo}, Data Inicio: {self.data_inicio}, Data Fim: {self.data_fim}, Código_curso: {self.codigo_curso}, Matricula_professor: {self.matricula_professor}"
+
+    @classmethod
+    def listar(cls):
+
+        conexao = sqlite3.connect("gestao_escolar.db")
+
+        cursor = conexao.cursor()
+
+        sql = """
+            SELECT tm.codigo, tm.periodo, tm.data_inicio, tm.data_fim, 
+            tm.codigo_curso, cs.nome, tm.matricula_professor, pf.nome
+            FROM Turmas AS tm
+            INNER JOIN Cursos AS cs ON tm.codigo_curso = cs.codigo
+            INNER JOIN Professores AS pf ON tm.matricula_professor = pf.matricula
+        """
+        cursor.execute(sql)
+
+        lista_turmas = cursor.fetchall()
+
+        conexao.close()
+
+        return lista_turmas
+
+    @classmethod
+    def listar_alunos(cls, codigo_turma):
+
+        conexao = sqlite3.connect("gestao_escolar.db")
+
+        cursor = conexao.cursor()
+
+        sql = f"""
+    	    SELECT al.matricula, al.nome, al.cpf, al.telefone, al.email
+            FROM Alunos AS al
+            INNER JOIN Turmas_Alunos AS ta on al.matricula = ta.matricula_aluno
+            WHERE ta.codigo_turma = '{codigo_turma}'
+        """
+        cursor.execute(sql)
+
+        lista_alunos = cursor.fetchall()
+
+        conexao.close()
+
+        return lista_alunos
+    
+
 
 
 if __name__ == '__main__':
