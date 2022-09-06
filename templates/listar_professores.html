@@ -23,10 +23,14 @@
             <!-- Conteudo do corpo da tabela -->
             {% for professor in professores %}
                 <tr>
-                    <td>{{professor[0]}}</td>
+                    <td>#{{professor[0]}}</td>
                     <td>{{professor[1]}}</td>
                     <td>{{professor[2]}}</td>
-                    <td>{{professor[3]}}</td>
+                    {% if professor[3] %}
+                        <td>ATIVO</td>
+                    {% else %}
+                        <td>INATIVO</td>
+                    {% endif %}
                     <td>{{professor[4]}}</td>
                     <td>{{professor[5]}}</td>
                     <td>{{professor[6]}}</td>

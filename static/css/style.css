@@ -198,24 +198,6 @@ main .conteudo-principal .conteudo-formulario .botao-primario {
     font-weight: 400;
 }
 
-/* main .conteudo-principal .conteudo-formulario .checkbox {
-    display: block;
-    text-align: left;
-}
-
-main .conteudo-principal .conteudo-formulario .checkbox input {
-    text-align: left;
-    margin: 1rem 0 1rem 0;
-}
-
-main .conteudo-principal .conteudo-formulario .checkbox label {
-    display: block;
-    font-size: 1.2rem;
-    color: var(--preto);
-    text-align: left;
-}
-*/
-
 main .conteudo-principal .conteudo-formulario input[type=checkbox] {
     width: 2rem;
     height: 2rem;
@@ -258,4 +240,14 @@ main .conteudo-principal .conteudo-formulario .conteudo-alunos label{
 
 .erro h5{
     color: white;
+}
+input:disabled {
+    display: flex;
+    padding-left: 28%;
+    font-size: 1rem;
+    background: transparent;
+    border: 0;
+    color: var(--preto);
+    font-family: 'Noto Serif', serif;
+    font-weight: 500;
 }

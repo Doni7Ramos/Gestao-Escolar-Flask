@@ -218,9 +218,13 @@ def cadastro_turma():
 
         if len(alunos_selecionados) >= 3:
 
-            Turma( data_inicio=data_inicio, data_fim=data_fim, periodo=periodo, codigo_curso=codigo_curso, matricula_professor=matricula_professor, alunos=alunos_selecionados)
+            try:
+                Turma(periodo=periodo, data_inicio=data_inicio, data_fim=data_fim, codigo_curso=codigo_curso, matricula_professor=matricula_professor, alunos=alunos_selecionados)
 
-            return redirect (url_for('listar_turmas') )
+                return redirect(url_for("listar_turmas"))
+            except ValueError as erro:
+                mensagem = erro
+                return render_template("cadastro_turmas.html", professores=professores, cursos=cursos, alunos=alunos, mensagem=mensagem)
 
         else:
             mensagem = "Selecione pelo menos 3 alunos"

@@ -28,7 +28,7 @@ class Turma:
 
     def salvar(self):
 
-        #self.verificaPeriodo()
+        self.verificaPeriodo()
 
         conexao = sqlite3.connect("gestao_escolar.db")
 

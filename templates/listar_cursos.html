@@ -20,10 +20,14 @@
             <!-- Conteudo do corpo da tabela -->
             {% for curso in cursos %}
                 <tr>
-                    <td>{{ curso[0] }}</td>
+                    <td>#{{ curso[0] }}</td>
                     <td>{{ curso[1] }}</td>
                     <td>{{ curso[2] }}</td>
-                    <td>{{ curso[3] }}</td>
+                    {% if curso[3] %}
+                        <td>ATIVO</td>
+                    {% else %}
+                        <td>INATIVO</td>
+                    {% endif %}
                     <td>{{ curso[4] }}</td>
                     <td><a href="/editar/curso/{{ curso[0] }}" class="botao-primario">Editar</a></td>
                 </tr>
